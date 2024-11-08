@@ -167,7 +167,7 @@ func (s *Sync) SyncGroups(ctx context.Context) error {
 	}
 
 	// Apply the changes to the groups
-	err = s.applyGroupChanges(ctx, defaultOrg.ID, userByID, coderGroups, coderGroupChanges)
+	err = s.applyGroupChanges(ctx, userByID, coderGroups, coderGroupChanges)
 	if err != nil {
 		return fmt.Errorf("failed to apply group changes: %w", err)
 	}
@@ -175,7 +175,7 @@ func (s *Sync) SyncGroups(ctx context.Context) error {
 	return nil
 }
 
-func (s *Sync) applyGroupChanges(ctx context.Context, org uuid.UUID, lookupUser map[uuid.UUID]codersdk.User, coderGroups map[string]codersdk.Group, changes ChangeGroupRequests) error {
+func (s *Sync) applyGroupChanges(ctx context.Context, lookupUser map[uuid.UUID]codersdk.User, coderGroups map[string]codersdk.Group, changes ChangeGroupRequests) error {
 	// Add/Remove all the users
 	for group, req := range changes {
 		coderGroup, ok := coderGroups[group]
